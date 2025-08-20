@@ -7,52 +7,36 @@ import java.util.List;
 @RestController
 public class FruitController {
 
-    private final FruitRepository repository;
+    private final FruitService service;
 
-    FruitController(FruitRepository repository) {
-        this.repository = repository;
+    FruitController(FruitService service) {
+        this.service = service;
     }
 
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/fruit")
     List<Fruit> all() {
-        return repository.findAll();
+        return service.findAll();
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/fruit")
     Fruit newFruit(@RequestBody Fruit newFruit) {
-        return repository.save(newFruit);
+        return service.save(newFruit);
     }
-
-    // Single item
 
     @GetMapping("/fruit/{id}")
     Fruit one(@PathVariable Long id) {
+        return service.getReferenceById(id);
 
-        return repository.findById(id)
-                .orElseThrow(() -> new FruitNotFoundException(id));
     }
 
     @PutMapping("/fruit/{id}")
     Fruit replaceEmployee(@RequestBody Fruit newFruit, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(fruit -> {
-                    fruit.setId(newFruit.getId());
-                    fruit.setName(newFruit.getName());
-                    fruit.setPrice(newFruit.getPrice());
-                    return repository.save(fruit);
-                })
-                .orElseGet(() -> {
-                    return repository.save(newFruit);
-                });
+        return service.replaceFruit(newFruit,id);
     }
 
     @DeleteMapping("/fruit/{id}")
     void deleteEmployee(@PathVariable Long id) {
-        repository.deleteById(id);
+        service.deleteFruit(id);
     }
 
 }

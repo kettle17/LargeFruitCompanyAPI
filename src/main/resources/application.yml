@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gcp:
+      credentials:
+        location: classpath:key.json
+      firestore:
+        project-id: fruit-database-5fbd4
+
+logging:
+  level:
+    com.google.cloud: DEBUG
+    org.springframework.cloud.gcp: DEBUG

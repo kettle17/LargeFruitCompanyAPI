@@ -1,42 +1,39 @@
 package org.example.largefruitcompanyapi;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
+@RequestMapping("/fruits")
 public class FruitController {
+    private final FruitService fruitService;
 
-    private final FruitService service;
-
-    FruitController(FruitService service) {
-        this.service = service;
+    public FruitController(FruitService fruitService) {
+        this.fruitService = fruitService;
     }
 
-    @GetMapping("/fruit")
-    List<Fruit> all() {
-        return service.findAll();
+    @GetMapping
+    public List<Fruit> getAllFruits() {
+        return fruitService.getAllFruits();
     }
 
-    @PostMapping("/fruit")
-    Fruit newFruit(@RequestBody Fruit newFruit) {
-        return service.save(newFruit);
+    @GetMapping("/{id}")
+    public Fruit getFruitById(@PathVariable String id) {
+        return fruitService.getFruitById(id);
     }
 
-    @GetMapping("/fruit/{id}")
-    Fruit one(@PathVariable Long id) {
-        return service.getReferenceById(id);
+    /*@GetMapping("/price/{price}")
+    public Fruit getFruitByPrice(@PathVariable String price) {
+        return fruitService.getFruitByPrice(Integer.parseInt(price));
+    }*/
 
+    @GetMapping("/all")
+    public List<Fruit> debugAllFruits() {
+        return fruitService.getAllFruits();
     }
 
-    @PutMapping("/fruit/{id}")
-    Fruit replaceEmployee(@RequestBody Fruit newFruit, @PathVariable Long id) {
-        return service.replaceFruit(newFruit,id);
+    @GetMapping("/output")
+    public void output() {
+        System.out.println("Yes i am running");
     }
-
-    @DeleteMapping("/fruit/{id}")
-    void deleteEmployee(@PathVariable Long id) {
-        service.deleteFruit(id);
-    }
-
 }

@@ -11,6 +11,16 @@ public class Fruit {
     private String name;
     private String price;
 
+    Fruit(String documentId, String name, String price) {
+        this.documentId = documentId;
+        this.name = name;
+        this.price = price;
+    }
+
+    Fruit(){
+
+    }
+
     public String getDocumentId() { return documentId; }
     public void setDocumentId(String documentId) { this.documentId = documentId; }
     public String getName() { return name; }

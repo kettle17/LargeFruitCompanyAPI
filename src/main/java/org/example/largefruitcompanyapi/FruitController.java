@@ -1,5 +1,6 @@
 package org.example.largefruitcompanyapi;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,27 +14,25 @@ public class FruitController {
     }
 
     @GetMapping
-    public List<Fruit> getAllFruits() {
-        return fruitService.getAllFruits();
+    public ResponseEntity<List<Fruit>> getAllFruits() {
+        List<Fruit> fruits = fruitService.getAllFruits();
+        if (fruits == null ) { //if not created, not found
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(fruits);
     }
 
     @GetMapping("/{id}")
-    public Fruit getFruitById(@PathVariable String id) {
-        return fruitService.getFruitById(id);
+    public ResponseEntity<Fruit> getFruitById(@PathVariable String id) {
+        Fruit fruit = fruitService.getFruitById(id);
+        if (fruit == null) {
+                return ResponseEntity.notFound().build();
+            }
+        return ResponseEntity.ok(fruit);
     }
 
     /*@GetMapping("/price/{price}")
     public Fruit getFruitByPrice(@PathVariable String price) {
         return fruitService.getFruitByPrice(Integer.parseInt(price));
     }*/
-
-    @GetMapping("/all")
-    public List<Fruit> debugAllFruits() {
-        return fruitService.getAllFruits();
-    }
-
-    @GetMapping("/output")
-    public void output() {
-        System.out.println("Yes i am running");
-    }
 }

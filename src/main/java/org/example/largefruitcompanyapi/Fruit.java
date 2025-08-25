@@ -1,46 +1,20 @@
 package org.example.largefruitcompanyapi;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.google.cloud.firestore.annotation.DocumentId;
+import com.google.cloud.spring.data.firestore.Document;
+import org.springframework.data.annotation.Id;
 
-@Entity
-class Fruit {
-
-    private @Id
-    @GeneratedValue long id;
+@Document(collectionName = "fruit")
+public class Fruit {
+    @DocumentId
+    private String documentId;
     private String name;
-    private double price;
+    private String price;
 
-    Fruit(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public Fruit() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public double getPrice() {
-        return price;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    public String getDocumentId() { return documentId; }
+    public void setDocumentId(String documentId) { this.documentId = documentId; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getPrice() { return price; }
+    public void setPrice(String price) { this.price = price; }
 }

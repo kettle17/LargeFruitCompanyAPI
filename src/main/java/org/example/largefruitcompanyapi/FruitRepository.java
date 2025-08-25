@@ -1,9 +1,7 @@
 package org.example.largefruitcompanyapi;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.google.cloud.spring.data.firestore.FirestoreReactiveRepository;
+import reactor.core.publisher.Flux;
 
-@Repository
-public interface FruitRepository extends JpaRepository<Fruit, Long> {
-
+public interface FruitRepository extends FirestoreReactiveRepository<Fruit> {
 }
